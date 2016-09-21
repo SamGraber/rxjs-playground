@@ -7,7 +7,7 @@
 <button (click)="multiply()"><i class="fa fa-times"></i></button>
 <button (click)="divide()"><i class="fa fa-wrench"></i></button>
 <button (click)="undo()"><i class="fa fa-undo"></i></button>
-<div>{{sum}}</div>
+<div>{{sum | async}}</div>
 <ul>
-	<li *ngFor="let operator of operators">{{operator.name}} {{operator.value}}, total {{operator.currentValue}}</li>
+	<li *ngFor="let operator of operators | async">{{operator.name}} {{operator.value}}, total {{operator.currentValue}}</li>
 </ul>
