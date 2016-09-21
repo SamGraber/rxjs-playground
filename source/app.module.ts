@@ -3,12 +3,14 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { CounterComponent } from './components/counter/counter.component';
+import { CalculatorComponent } from './components/calculator/calculator.component';
 
 @NgModule({
 	imports: [BrowserModule],
 	declarations: [
 		AppComponent,
 		CounterComponent,
+		CalculatorComponent,
 	],
 	bootstrap: [AppComponent]
 })

@@ -1,0 +1,13 @@
+<input #input
+	   type="number"
+	   [value]="value"
+	   (keyup)="value = input.value" />
+<button (click)="add()"><i class="fa fa-plus"></i></button>
+<button (click)="subtract()"><i class="fa fa-minus"></i></button>
+<button (click)="multiply()"><i class="fa fa-times"></i></button>
+<button (click)="divide()"><i class="fa fa-wrench"></i></button>
+<button (click)="undo()"><i class="fa fa-undo"></i></button>
+<div>{{sum | async}}</div>
+<ul>
+	<li *ngFor="let operator of debugState.actions">{{operator.name}} {{operator.value}}, total {{operator.currentValue}}</li>
+</ul>
