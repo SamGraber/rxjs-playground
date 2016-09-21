@@ -73,7 +73,7 @@ export class CalculatorComponent {
 			this.value = 0;
 			this.operators.next([...this.operators.getValue(), this.currentOperator]);
 			this.currentOperator = null;
-		} else {
+		} else if (!this.operators.getValue().length) {
 			const value = +this.value;
 			this.clear();
 			this.operators.next([{
