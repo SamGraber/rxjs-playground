@@ -12,8 +12,8 @@ interface Operator {
 interface AppliedOperator {
 	name: string;
 	operator: Operator;
-	value: number;
-	currentValue: number;
+	value?: number;
+	currentValue?: number;
 }
 
 let appliedOperators = [];
@@ -28,6 +28,7 @@ export class CalculatorComponent {
 	value: number = 0;
 	operators: BehaviorSubject<AppliedOperator[]>;
 	sum: Observable<number>;
+	currentOperator: AppliedOperator;
 
 	constructor() {
 		this.operators = new BehaviorSubject([]);
@@ -35,19 +36,54 @@ export class CalculatorComponent {
 	}
 
 	add(): void {
-		this.applyOperator('Add', (sum: number, value: number) => sum + value);
+		this.apply();
+		this.currentOperator = {
+			name: 'Add',
+			operator: (sum: number, value: number) => sum + value,
+		};
 	}
 	
 	subtract(): void {
-		this.applyOperator('Subtract', (sum: number, value: number) => sum - value);
+		this.apply();
+		this.currentOperator = {
+			name: 'Subtract',
+			operator: (sum: number, value: number) => sum - value,
+		};
 	}
 	
 	multiply(): void {
-		this.applyOperator('Multiply', (sum: number, value: number) => sum * value);
+		this.apply();
+		this.currentOperator = {
+			name: 'Multiply',
+			operator: (sum: number, value: number) => sum * value,
+		};
 	}
 	
 	divide(): void {
-		this.applyOperator('Divide', (sum: number, value: number) => sum / value);
+		this.apply();
+		this.currentOperator = {
+			name: 'Divide',
+			operator: (sum: number, value: number) => sum / value,
+		};
+	}
+
+	apply(): void {
+		if (this.currentOperator) {
+			this.currentOperator.value = +this.value;
+			this.value = 0;
+			this.operators.next([...this.operators.getValue(), this.currentOperator]);
+			this.currentOperator = null;
+		} else {
+			const value = +this.value;
+			this.clear();
+			this.operators.next([{
+				name: 'Add',
+				operator: (sum: number, value: number) => sum + value,
+				value: value,
+				currentValue: value,
+			}]);
+		}
+
 	}
 	
 	undo(): void {
