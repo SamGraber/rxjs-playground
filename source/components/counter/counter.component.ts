@@ -11,6 +11,7 @@ export class CounterComponent {
 	finished: boolean;
 
 	trigger(): void {
+		this.finished = false;
 		Observable.zip(
 				Observable.from([10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]),
 				Observable.interval(1000).startWith(0).take(11)
