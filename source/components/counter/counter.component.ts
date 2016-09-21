@@ -16,10 +16,9 @@ export class CounterComponent {
 				Observable.interval(1000).startWith(0).take(11)
 			)
 			.map(x => x[0])
-			.subscribe(
-				x => this.val = x,
-				null,
-				() => this.finished = true
-			);
+			.subscribe({
+				next: x => this.val = x,
+				complete: () => this.finished = true,
+			});
 	}
 }
