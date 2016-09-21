@@ -36,6 +36,22 @@ export class CalculatorComponent {
 		this.operators = new BehaviorSubject([]);
 		this.sum = this.operators.map(operators => operators.reduce(<any>operatorReducer, 0));
 	}
+	
+	keyup(value: string, event: KeyboardEvent): void {
+		if (event.key === '+') {
+			this.add();
+		} else if (event.key === '-') {
+			this.subtract();
+		} else if (event.key === '*') {
+			this.multiply();
+		} else if (event.key === '/') {
+			this.divide();
+		} else if (event.key === '=') {
+			this.apply();
+		} else {
+			this.value = +value;
+		}
+	}
 
 	add(): void {
 		this.apply();
@@ -77,12 +93,12 @@ export class CalculatorComponent {
 				return;
 			}
 
-			this.currentOperator.value = +this.value;
+			this.currentOperator.value = this.value;
 			this.value = null;
 			this.operators.next([...this.operators.getValue(), this.currentOperator]);
 			this.currentOperator = null;
 		} else if (!this.operators.getValue().length) {
-			const value = +this.value;
+			const value = this.value;
 			this.clear();
 			this.operators.next([{
 				name: 'Add',
@@ -108,7 +124,7 @@ export class CalculatorComponent {
 		const applied = {
 			name: name,
 			operator: operator,
-			value: +this.value,
+			value: this.value,
 			currentValue: null,
 		};
 		this.operators.next([...this.operators.getValue(), applied]);

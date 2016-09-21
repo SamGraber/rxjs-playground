@@ -1,7 +1,7 @@
 <input #input
 	   type="number"
 	   [value]="value"
-	   (keyup)="value = input.value" />
+	   (keyup)="keyup(input.value, $event)" />
 <button (click)="add()"><i class="fa fa-plus"></i></button>
 <button (click)="subtract()"><i class="fa fa-minus"></i></button>
 <button (click)="multiply()"><i class="fa fa-times"></i></button>
