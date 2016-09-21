@@ -12,7 +12,7 @@ export class CounterComponent {
 
 	trigger(): void {
 		this.countdown = Observable.zip(
-				Observable.from([10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]),
+				Observable.range(0, 11).map(x => 10 - x),
 				Observable.interval(1000).startWith(0).take(11)
 			)
 			.map(x => x[0]);
