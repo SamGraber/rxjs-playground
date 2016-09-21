@@ -7,19 +7,15 @@ import { Observable } from 'rxjs/Observable';
 	templateUrl: 'counter.component.html',
 })
 export class CounterComponent {
-	val: number;
-	finished: boolean;
+	countdown: Observable<number>;
+	finished: Observable<boolean>;
 
 	trigger(): void {
-		this.finished = false;
-		Observable.zip(
+		this.countdown = Observable.zip(
 				Observable.from([10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]),
 				Observable.interval(1000).startWith(0).take(11)
 			)
-			.map(x => x[0])
-			.subscribe({
-				next: x => this.val = x,
-				complete: () => this.finished = true,
-			});
+			.map(x => x[0]);
+		this.finished = <Observable<boolean>>Observable.concat(this.countdown.ignoreElements(), Observable.of(true));
 	}
 }
