@@ -1,0 +1,19 @@
+# Definitively typed files (from typings)
+/typings/globals
+/typings/modules
+/typings/index.d.ts
+
+# Don't commit built files (*.js, *.d.ts)
+/source/*.js
+/source/*.js.map
+/source/*.d.ts
+/source/**/*.js
+/source/**/*.js.map
+/source/**/*.d.ts
+
+# Node deps
+npm-debug.log
+/node_modules/
+
+# Ignore git conflict / diff files
+*.orig
