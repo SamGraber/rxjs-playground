@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { dropRight } from 'lodash';
 
 import { DebugStateService } from '../../services/debug-state/debug-state.service';
 
@@ -25,12 +26,12 @@ let appliedOperators = [];
 })
 export class CalculatorComponent {
 	value: number = 0;
-	operators: Subject<AppliedOperator>;
+	operators: BehaviorSubject<AppliedOperator[]>;
 	sum: Observable<number>;
 
-	constructor(public debugState: DebugStateService) {
-		this.operators = new Subject<AppliedOperator>();
-		this.sum = this.operators.scan(<any>operatorReducer, 0);
+	constructor() {
+		this.operators = new BehaviorSubject([]);
+		this.sum = this.operators.map(operators => operators.reduce(<any>operatorReducer, 0));
 	}
 
 	add(): void {
@@ -50,10 +51,7 @@ export class CalculatorComponent {
 	}
 	
 	undo(): void {
-		// const current = this.operators.last();
-		// this.operators.complete();
-		// this.operators = new Subject<AppliedOperator>();
-		// current.subscribe(operator => this.sum = this.operators.scan(operatorReducer, operator.currentValue));
+		this.operators.next(dropRight(this.operators.getValue()));
 	}
 
 	private applyOperator(name: string, operator: Operator): void {
@@ -63,8 +61,7 @@ export class CalculatorComponent {
 			value: +this.value,
 			currentValue: null,
 		};
-		this.operators.next(applied);
-		this.debugState.log(applied);
+		this.operators.next([...this.operators.getValue(), applied]);
 		this.value = 0;
 	}
 }
