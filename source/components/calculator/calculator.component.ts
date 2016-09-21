@@ -83,7 +83,12 @@ export class CalculatorComponent {
 				currentValue: value,
 			}]);
 		}
+	}
 
+	clear(): void {
+		this.operators.next([]);
+		this.value = null;
+		this.currentOperator = null;
 	}
 	
 	undo(): void {
