@@ -25,7 +25,7 @@ let appliedOperators = [];
 	providers: [DebugStateService],
 })
 export class CalculatorComponent {
-	value: number = 0;
+	value: number;
 	operators: BehaviorSubject<AppliedOperator[]>;
 	sum: Observable<number>;
 	currentOperator: AppliedOperator;
@@ -71,8 +71,14 @@ export class CalculatorComponent {
 
 	apply(): void {
 		if (this.currentOperator) {
+			if (this.value == null) {
+				this.currentOperator = null;
+				this.input.nativeElement.focus();
+				return;
+			}
+
 			this.currentOperator.value = +this.value;
-			this.value = 0;
+			this.value = null;
 			this.operators.next([...this.operators.getValue(), this.currentOperator]);
 			this.currentOperator = null;
 		} else if (!this.operators.getValue().length) {
