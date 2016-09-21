@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { dropRight } from 'lodash';
@@ -29,6 +29,8 @@ export class CalculatorComponent {
 	operators: BehaviorSubject<AppliedOperator[]>;
 	sum: Observable<number>;
 	currentOperator: AppliedOperator;
+
+	@ViewChild('input') input: ElementRef;
 
 	constructor() {
 		this.operators = new BehaviorSubject([]);
@@ -83,6 +85,7 @@ export class CalculatorComponent {
 				currentValue: value,
 			}]);
 		}
+		this.input.nativeElement.focus();
 	}
 
 	clear(): void {
