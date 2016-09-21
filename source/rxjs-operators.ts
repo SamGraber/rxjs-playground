@@ -3,6 +3,7 @@ import 'rxjs/add/observable/from';
 import 'rxjs/add/observable/zip';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/concat';
+import 'rxjs/add/observable/range';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/take';
